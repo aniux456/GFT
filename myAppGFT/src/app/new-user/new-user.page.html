@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Nuevo usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="newUsrForm">
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [formControl]="newUsrForm.controls['email']" name="email" type="email"></ion-input>
+    </ion-item>
+    <p *ngIf="newUsrForm.controls.email.invalid && newUsrForm.controls.email.dirty" class="error-data">El email es obligatorio. Ingresa un email válido.</p>
+    
+    <ion-item>
+      <ion-label position="floating">Nombre(s)</ion-label>
+      <ion-input type="text" name="nombre" [formControl]="newUsrForm.controls['nombre']"></ion-input>
+    </ion-item>
+    <p *ngIf="newUsrForm.controls.nombre.invalid && newUsrForm.controls.nombre.dirty" class="error-data">El nombre es obligatorio. Ingresa un nombre válido.</p>
+   
+    <ion-item>
+      <ion-label position="floating">Apellido(s)</ion-label>
+      <ion-input type="text" name="apellido" [formControl]="newUsrForm.controls['apellido']"></ion-input>
+    </ion-item>
+    <p *ngIf="newUsrForm.controls.apellido.invalid && newUsrForm.controls.apellido.dirty" class="error-data">El apellido es obligatorio. Ingresa un apellido valido.</p>
+   
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input [formControl]="newUsrForm.controls['password']" name="password" type="password"></ion-input>
+    </ion-item>
+    <p *ngIf="newUsrForm.controls.password.invalid && newUsrForm.controls.password.dirty" class="error-data">El password es obligatorio.</p>
+
+    <ion-button [disabled]="newUsrForm.invalid" expand="block" color="primary" (click)="newUser()">Crear usuario</ion-button>
+  </form>
+  <p *ngIf="message!='' && !error" class="data-ok">{{ message }}</p>
+  <p *ngIf="message!='' && error" class="error-data">{{ message }}</p>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+      <ion-button color="tertiary" (click)="goToLoggin()" expand="full">Iniciar sesión</ion-button>
+    </ion-toolbar>
+</ion-footer>
