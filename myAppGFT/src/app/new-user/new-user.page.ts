@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { LoadingController } from '@ionic/angular';
 import { UserServiceService } from '../services/user-service.service';
 
 @Component({
@@ -17,13 +18,22 @@ export class NewUserPage implements OnInit {
   apellido = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-ZñÑ ]*$/)]);
   message = "";
   error: boolean;
-  constructor(private formBuilder: FormBuilder, public newUserService: UserServiceService, private router: Router) { 
+  constructor(private formBuilder: FormBuilder, public newUserService: UserServiceService, private router: Router, public loadingController: LoadingController) { 
     this.newUsrForm = this.formBuilder.group({
       email: this.email,
       password: this.password,
       nombre: this.nombre,
       apellido: this.apellido
     });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Por favor esepera'
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
   ngOnInit() {
@@ -34,17 +44,20 @@ export class NewUserPage implements OnInit {
   }
 
   newUser(){
+    this.presentLoading();
     let params = { email: this.email.value, 
       firstname: this.nombre.value,
       lastname: this.apellido.value,
       password: this.password.value }
     this.newUserService.creatUser(params).subscribe(
       (data: any) => { // Success
-        console.log("data: ", data);
+        this.loadingController.dismiss();
+        console.log("data creatUser: ", data);
         this.message = data.success;
         this.error = false;
       },
       (error) =>{
+        this.loadingController.dismiss();
         console.error(error);
         this.message = error.error.message;
         this.error = true;

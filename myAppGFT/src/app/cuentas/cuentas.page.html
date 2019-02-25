@@ -5,33 +5,20 @@
 </ion-header>
 
 <ion-content padding>
-  
   <ion-list>
     <ion-list-header>
       <ion-label>Cuentas:</ion-label>
     </ion-list-header>
     <ion-item *ngFor="let item of cuentas" > {{item.name}} ${{item.balance}} </ion-item>
   </ion-list>
-  <ion-button color="tertiary" (click)="addAccount()" expand="full">Solicitar nueva cuenta</ion-button>
-  <p *ngIf="message!=''" class="data-ok">{{ message }}</p>
-  <div *ngIf="agregarCuenta">
-    <ion-toolbar color="secondary">
-      <ion-title>
-        Agregar cuenta
-        <ion-button color="secondary">
-          <ion-icon name="close"></ion-icon>
-        </ion-button>
-      </ion-title>
-    </ion-toolbar>
 
-    <ion-item>
-      <ion-label>Tipo de cuenta</ion-label>
-      <ion-select>
-        <ion-select-option value="item.type" *ngFor="let item of catCuentas">{{item.name}}</ion-select-option > 
-      </ion-select>
-    </ion-item>
+  <p *ngIf="sinCuentas" class="sinCuentas"> *** No tienes cuentas. *** </p>
 
-    <ion-button [disabled]="false" expand="block" color="primary" (click)="saveAccount()">Agregar cuenta</ion-button>
-
-  </div>
+  <ion-button shape="round" color="primary" expand="block" (click)="addAccount()">(+) Solicitar nueva cuenta</ion-button>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="tertiary" (click)="close()" expand="full">Cerrar sesión</ion-button>
+  </ion-toolbar>
+</ion-footer>

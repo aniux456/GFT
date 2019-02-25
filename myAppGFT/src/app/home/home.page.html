@@ -12,15 +12,15 @@
       <ion-label position="floating">Email</ion-label>
       <ion-input [formControl]="logginForm.controls['email']" name="email" type="email"></ion-input>
     </ion-item>
-    <p *ngIf="logginForm.controls.email.invalid && logginForm.controls.email.dirty" class="error-data">El email es obligatorio.</p>
+    <p *ngIf="logginForm.controls['email'].invalid && logginForm.controls['email'].dirty" class="error-data">El email es obligatorio.</p>
     
     <ion-item>
       <ion-label position="floating">Password</ion-label>
       <ion-input [formControl]="logginForm.controls['password']" name="password" type="password"></ion-input>
     </ion-item>
-    <p *ngIf="logginForm.controls.password.invalid && logginForm.controls.password.dirty" class="error-data">El password es obligatorio.</p>
+    <p *ngIf="logginForm.controls['password'].invalid && logginForm.controls['password'].dirty" class="error-data">El password es obligatorio.</p>
 
-    <ion-button [disabled]="logginForm.invalid" expand="block" color="primary" (click)="loggin()">Continuar</ion-button>
+    <ion-button [disabled]="logginForm.invalid" expand="block" shape="round" color="primary" (click)="loggin()">Continuar</ion-button>
   </form>
   <p *ngIf="message!='' && !error" class="data-ok">{{ message }}</p>
   <p *ngIf="message!='' && error" class="error-data">{{ message }}</p>
@@ -28,6 +28,6 @@
 
 <ion-footer>
     <ion-toolbar>
-      <ion-button color="tertiary" (click)="newAccount()" expand="full">Crea una nueva cuenta</ion-button>
+      <ion-button color="tertiary" (click)="newAccount()" expand="full">Crear nuevo usuario</ion-button>
     </ion-toolbar>
 </ion-footer>

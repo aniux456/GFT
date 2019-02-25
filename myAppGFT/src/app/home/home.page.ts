@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserServiceService } from '../services/user-service.service';
+import { LoadingController } from '@ionic/angular';
 
 const helper = new JwtHelperService();
 
@@ -20,11 +21,20 @@ export class HomePage {
   message = "";
   error: boolean;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, public newUserService: UserServiceService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, public newUserService: UserServiceService, public loadingController: LoadingController) {
     this.logginForm = this.formBuilder.group({
       email: this.email,
       password: this.password
     });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Por favor esepera'
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
   newAccount() {
@@ -33,10 +43,12 @@ export class HomePage {
 
   loggin() {
     console.log("loggin prepara datos");
+    this.presentLoading();
     let params = { email: this.email.value,
       password: this.password.value }
     this.newUserService.loggin(params).subscribe(
       (data: any) => { // Success
+        this.loadingController.dismiss();
         console.log("data: ", data);
         localStorage.setItem("jwt", data.token);
         const decodedToken = helper.decodeToken(data.token);
@@ -45,6 +57,7 @@ export class HomePage {
         this.router.navigateByUrl('cuentas');
       },
       (error) =>{
+        this.loadingController.dismiss();
         console.error(error);
         this.message = error.error.message;
         this.error = true;

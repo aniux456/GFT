@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons  slot="start">
+          <ion-icon name="arrow-round-back" (click)="regresar()"></ion-icon>
+      </ion-buttons>
+    <ion-title>Agregar cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <p *ngIf="message!=''" class="data-ok">{{ message }}</p>
+
+  <form [formGroup]="addAccountForm">
+    <ion-item>
+      <ion-label>Tipo de tarjeta</ion-label>
+      <ion-select placeholder="Tipo de tarjeta" formControlName="tipoCuenta">
+        <ion-select-option [value]="tipoCuenta" *ngFor="let tipoCuenta of catCuentas">{{tipoCuenta.name}}</ion-select-option > 
+      </ion-select>
+    </ion-item>
+    <ion-button [disabled]="addAccountForm.invalid" expand="block" shape="round" color="primary" (click)="saveAccount()">Solicitar cuenta</ion-button>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="tertiary" (click)="close()" expand="full">Cerrar sesión</ion-button>
+  </ion-toolbar>
+</ion-footer>
