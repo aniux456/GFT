@@ -9,7 +9,12 @@
     <ion-list-header>
       <ion-label>Cuentas:</ion-label>
     </ion-list-header>
-    <ion-item *ngFor="let item of cuentas" > {{item.name}} ${{item.balance}} </ion-item>
+    <ion-item *ngFor="let item of cuentas" >
+      <ion-label class="cuentaName">{{item.name}}</ion-label>
+      <ion-label>Saldo: ${{item.balance}}</ion-label>
+      <ion-label>Depositos: ${{item.deposits}}</ion-label>
+      <ion-label>Retiros: ${{item.withdrawals}}</ion-label>
+    </ion-item>
   </ion-list>
 
   <p *ngIf="sinCuentas" class="sinCuentas"> *** No tienes cuentas. *** </p>
