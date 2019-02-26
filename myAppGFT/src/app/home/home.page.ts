@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
   }
 
   newAccount() {
-    this.router.navigateByUrl('new-user');
+    this.router.navigate(['/new-user']);
   }
 
   loggin() {
@@ -55,12 +55,15 @@ export class HomePage implements OnInit {
         localStorage.setItem("jwt", data.token);
         const decodedToken = helper.decodeToken(data.token);
         localStorage.setItem("id", decodedToken.id);
-        this.router.navigateByUrl('cuentas');
+        this.router.navigate(['/cuentas']);
       },
       (error) =>{
         this.loadingController.dismiss();
         console.error(error);
-        this.message = error.error.error;
+        if (error.error.success)
+          this.message = error.error.success;
+        else
+          this.message = error.error.error;
       }
     );
   }

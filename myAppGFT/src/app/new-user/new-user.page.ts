@@ -41,7 +41,7 @@ export class NewUserPage implements OnInit {
   }
 
   goToLoggin() {
-    this.router.navigateByUrl('home');
+    this.router.navigate(['/home']);
   }
 
   newUser(){

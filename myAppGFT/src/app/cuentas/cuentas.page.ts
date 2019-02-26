@@ -46,17 +46,17 @@ export class CuentasPage implements OnInit {
       //this.cuentas = [{ _id: "5b9fe477c68dcf0c5b12a384", name: "Tarjeta de Credito", type: "TDC", userId: "34534f543f345r3", deposits: 0, withdrawals:0, balance: 0}, { _id: "5b9fe477c435f345ffa384", name: "Tarjeta de Debito", type: "TDD", userId: "34534f543f345r3", deposits: 0, withdrawals:0, balance: 0}]
     } else {
       localStorage.clear();
-      this.router.navigateByUrl('home');
+      this.router.navigate(['/home']);
     }
   }
 
   addAccount() {
-    this.router.navigateByUrl('new-account');
+    this.router.navigate(['/new-account']);
   }
 
   close() {
     localStorage.clear();
-    this.router.navigateByUrl('home');
+    this.router.navigate(['/home']);
   }
 
 }

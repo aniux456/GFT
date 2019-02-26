@@ -52,7 +52,7 @@ export class NewAccountPage implements OnInit {
       this.userId = localStorage.getItem("id");
     } else {
       localStorage.clear();
-      this.router.navigateByUrl('home');
+      this.router.navigate(['/home']);
     }
   }
 
@@ -77,10 +77,10 @@ export class NewAccountPage implements OnInit {
 
   close() {
     localStorage.clear();
-    this.router.navigateByUrl('home');
+    this.router.navigate(['/home']);
   }
 
   regresar() {
-    this.router.navigateByUrl('cuentas');
+    this.router.navigate(['/cuentas']);
   }
 }
