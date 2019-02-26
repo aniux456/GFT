@@ -22,8 +22,7 @@
 
     <ion-button [disabled]="logginForm.invalid" expand="block" shape="round" color="primary" (click)="loggin()">Continuar</ion-button>
   </form>
-  <p *ngIf="message!='' && !error" class="data-ok">{{ message }}</p>
-  <p *ngIf="message!='' && error" class="error-data">{{ message }}</p>
+  <p *ngIf="message!=''" class="error-data">{{ message }}</p>
 </ion-content>
 
 <ion-footer>

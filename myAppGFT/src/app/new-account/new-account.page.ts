@@ -14,7 +14,7 @@ export class NewAccountPage implements OnInit {
   tipoCuenta = new FormControl('', [Validators.required]);
   addAccountForm: FormGroup;
   userId: any;
-  message = "";
+  message: string;
   jwt: any;
   catCuentas: any = [];
 
@@ -35,12 +35,11 @@ export class NewAccountPage implements OnInit {
 
   ngOnInit() {
     this.jwt = localStorage.getItem("jwt");
-    console.log(this.jwt);
+    this.message = "";
     if (this.jwt) {
       this.presentLoading();
       this.newUserService.getCatCuentas(this.jwt).subscribe(
         (data: any) => { // Success
-          console.log("data: ", data);
           this.catCuentas = data.response.type_cards;
           console.log(this.catCuentas);
           this.loadingController.dismiss();
@@ -59,7 +58,6 @@ export class NewAccountPage implements OnInit {
 
   saveAccount() {
     this.presentLoading();
-    console.log("saveAccount");
     let data = { userId: this.userId,
       type: this.tipoCuenta.value.type,
       name: this.tipoCuenta.value.name }

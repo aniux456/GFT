@@ -16,7 +16,7 @@ export class NewUserPage implements OnInit {
   password = new FormControl('', [Validators.required]);
   nombre = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-ZñÑ ]*$/)]);
   apellido = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-ZñÑ ]*$/)]);
-  message = "";
+  message: string;
   error: boolean;
   constructor(private formBuilder: FormBuilder, public newUserService: UserServiceService, private router: Router, public loadingController: LoadingController) { 
     this.newUsrForm = this.formBuilder.group({
@@ -37,6 +37,7 @@ export class NewUserPage implements OnInit {
   }
 
   ngOnInit() {
+    this.message = "";
   }
 
   goToLoggin() {

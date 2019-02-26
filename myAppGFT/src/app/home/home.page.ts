@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -13,19 +13,22 @@ const helper = new JwtHelperService();
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage implements OnInit {
 
   logginForm: FormGroup;
   email = new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]);
   password = new FormControl('', [Validators.required]);
-  message = "";
-  error: boolean;
+  message: string;
 
   constructor(private formBuilder: FormBuilder, private router: Router, public newUserService: UserServiceService, public loadingController: LoadingController) {
     this.logginForm = this.formBuilder.group({
       email: this.email,
       password: this.password
     });
+  }
+
+  ngOnInit() {
+    this.message = "";
   }
 
   async presentLoading() {
@@ -49,18 +52,15 @@ export class HomePage {
     this.newUserService.loggin(params).subscribe(
       (data: any) => { // Success
         this.loadingController.dismiss();
-        console.log("data: ", data);
         localStorage.setItem("jwt", data.token);
         const decodedToken = helper.decodeToken(data.token);
-        console.log(decodedToken);
         localStorage.setItem("id", decodedToken.id);
         this.router.navigateByUrl('cuentas');
       },
       (error) =>{
         this.loadingController.dismiss();
         console.error(error);
-        this.message = error.error.message;
-        this.error = true;
+        this.message = error.error.error;
       }
     );
   }

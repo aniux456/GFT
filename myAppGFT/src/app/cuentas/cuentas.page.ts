@@ -11,7 +11,7 @@ import { UserServiceService } from '../services/user-service.service';
 export class CuentasPage implements OnInit {
 
   jwt: any;
-  cuentas:any = [];
+  cuentas:any;
   sinCuentas: boolean;
   
   constructor(private router: Router, public newUserService: UserServiceService, public loadingController: LoadingController) { }
@@ -26,13 +26,12 @@ export class CuentasPage implements OnInit {
   }
 
   ngOnInit() {
+    this.cuentas = [];
     this.jwt = localStorage.getItem("jwt");
-    console.log(this.jwt);
     if (this.jwt) {
       this.presentLoading();
       this.newUserService.getAccounts(this.jwt).subscribe(
         (data: any) => { // Success
-          console.log("data: ", data);
           this.cuentas = data.response;
           console.log(this.cuentas);
           if(this.cuentas.length == 0)
